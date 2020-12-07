@@ -8,9 +8,21 @@
     <h1>shrtlnk.online</h1>
     <form method="post" action="/new">
         <label>
-            <input type="url" placeholder="Enter url you want to shorten here!" name="link">
+            <input type="url" placeholder="Enter url you want to shorten here!" name="link" id="link">
         </label>
         <button type="submit">Shorten!</button>
     </form>
+
+    <script>
+        (function () {
+            const input = document.getElementById('link');
+            input.addEventListener('change', () => {
+                let { value } = input;
+                if (!value.startsWith('http')) {
+                    input.value = `http://${value}`;
+                }
+            });
+        })()
+    </script>
 </body>
 </html>

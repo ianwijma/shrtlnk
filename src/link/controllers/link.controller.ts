@@ -46,9 +46,9 @@ export class LinkController {
     req: Request,
   ) {
     const redirectDto = RedirectDto.createRequestDto(shortid, req);
-    const link = await this.linkService.redirect(redirectDto);
-    if (link) {
-      res.redirect(link.link);
+    const redirectTo = await this.linkService.redirect(redirectDto);
+    if (redirectTo) {
+      res.redirect(redirectTo);
     } else {
       res.redirect('/');
     }

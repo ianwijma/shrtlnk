@@ -17,9 +17,11 @@ export class LinkService {
     return linkObj;
   }
 
-  async redirect(redirectDto: RedirectDto) {
+  async redirect(redirectDto: RedirectDto): Promise<string> {
     const { shortid } = redirectDto;
     const linkObj = await this.linkRepository.getOneByShortid(shortid);
-    return linkObj;
+    if (linkObj) {
+      return linkObj.link;
+    }
   }
 }
