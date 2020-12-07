@@ -4,13 +4,15 @@ import {
   Get,
   Param,
   Post,
+  Req,
   Res,
   ValidationPipe,
 } from '@nestjs/common';
 import { NewLinkDto } from '../dto/new-link.dto';
 import { LinkRepository } from '../repositories/link.repository';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { resolve } from 'path';
+import { RedirectDto } from '../dto/redirect.dto';
 
 @Controller('')
 export class LinkController {
@@ -40,8 +42,11 @@ export class LinkController {
     shortid: string,
     @Res()
     res: Response,
+    @Req()
+    req: Request,
   ) {
-    const link = await this.linkRepository.redirect(shortid);
+    const redirectDto = RedirectDto.createRequestDto(shortid, req);
+    const link = await this.linkRepository.redirect(redirectDto);
     if (link) {
       res.redirect(link.link);
     } else {
