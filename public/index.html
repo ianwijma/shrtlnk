@@ -17,9 +17,12 @@
         (function () {
             const input = document.getElementById('link');
             input.addEventListener('change', () => {
-                let { value } = input;
+                const { value } = input;
                 if (!value.startsWith('http')) {
                     input.value = `http://${value}`;
+                }
+                if (value.startsWith('https://')) {
+                    input.value = `http://${value.substr(8)}`;
                 }
             });
         })()
