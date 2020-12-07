@@ -9,21 +9,21 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { NewLinkDto } from '../dto/new-link.dto';
-import { LinkRepository } from '../repositories/link.repository';
 import { Response, Request } from 'express';
 import { resolve } from 'path';
 import { RedirectDto } from '../dto/redirect.dto';
+import { LinkService } from '../services/link.service';
 
 @Controller('')
 export class LinkController {
-  constructor(private linkRepository: LinkRepository) {}
+  constructor(private linkService: LinkService) {}
 
   @Post('new')
   async new(
     @Body(ValidationPipe)
     newLinkDto: NewLinkDto,
   ) {
-    return this.linkRepository.ensureLink(newLinkDto);
+    return this.linkService.ensureLink(newLinkDto);
   }
 
   @Get('/')
@@ -46,7 +46,7 @@ export class LinkController {
     req: Request,
   ) {
     const redirectDto = RedirectDto.createRequestDto(shortid, req);
-    const link = await this.linkRepository.redirect(redirectDto);
+    const link = await this.linkService.redirect(redirectDto);
     if (link) {
       res.redirect(link.link);
     } else {

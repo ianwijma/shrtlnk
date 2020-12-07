@@ -8,6 +8,14 @@ import { RedirectDto } from '../dto/redirect.dto';
 
 @EntityRepository(LinkEntity)
 export class LinkRepository extends Repository<LinkEntity> {
+  getOneByLink(link: string) {
+    return this.findOne({ link });
+  }
+
+  getOneByShortid(shortid: string) {
+    return this.findOne({ shortid });
+  }
+
   async ensureLink(newLinkDto: NewLinkDto): Promise<LinkEntity> {
     const { link } = newLinkDto;
 
