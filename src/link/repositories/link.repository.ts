@@ -4,7 +4,6 @@ import { LinkEntity } from '../entities/link.entity';
 import { NewLinkDto } from '../dto/new-link.dto';
 import { InternalServerErrorException } from '@nestjs/common';
 import { nanoid } from 'nanoid';
-import { RedirectDto } from '../dto/redirect.dto';
 
 @EntityRepository(LinkEntity)
 export class LinkRepository extends Repository<LinkEntity> {
@@ -14,17 +13,6 @@ export class LinkRepository extends Repository<LinkEntity> {
 
   getOneByShortid(shortid: string) {
     return this.findOne({ shortid });
-  }
-
-  async ensureLink(newLinkDto: NewLinkDto): Promise<LinkEntity> {
-    const { link } = newLinkDto;
-
-    let linkObj = await this.findOne({ link });
-    if (!linkObj) {
-      linkObj = await this.createLink(newLinkDto);
-    }
-
-    return linkObj;
   }
 
   async createLink(newLinkDto: NewLinkDto) {
@@ -46,10 +34,5 @@ export class LinkRepository extends Repository<LinkEntity> {
     }
 
     return linkObj;
-  }
-
-  async redirect(redirectDto: RedirectDto) {
-    const { shortid } = redirectDto;
-    return await this.findOne({ shortid });
   }
 }
