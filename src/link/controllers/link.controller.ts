@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Logger,
   Param,
   Post,
   Req,
@@ -16,6 +17,8 @@ import { LinkService } from '../services/link.service';
 
 @Controller('')
 export class LinkController {
+  private logger: Logger = new Logger('LinkController');
+
   constructor(private linkService: LinkService) {}
 
   @Post('new')
@@ -50,6 +53,7 @@ export class LinkController {
     if (redirectTo) {
       res.redirect(redirectTo);
     } else {
+      this.logger.log(`Link with shortid ${shortid} not found`);
       res.redirect('/');
     }
   }

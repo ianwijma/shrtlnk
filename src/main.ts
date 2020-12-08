@@ -13,7 +13,7 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('shrtlnk.dev Api')
     .setDescription('The shrtlnk.online api')
-    .setVersion('1.0')
+    .setVersion('0.1')
     .addTag('shrtlnk')
     .build();
   const document = SwaggerModule.createDocument(app, options);
